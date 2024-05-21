@@ -3,7 +3,7 @@
 /*The asyncHandler function is used to simplify error handling in Express routes. Without asyncHandler, you would need to use try...catch blocks in every asynchronous route handler to catch errors and pass them to the next middleware. By using asyncHandler, you can avoid repetitive error-handling code and ensure that all errors are handled consistently.*/
 
 const asyncHandler = (requestHandler) => {
-  (req, res, next) => {
+  return (req, res, next) => {
     Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
   };
 };

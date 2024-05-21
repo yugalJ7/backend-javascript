@@ -1,0 +1,32 @@
+Difference between http and https
+http-sends data in plain text
+https:sends data encrypted data or in secure way
+
+HTTP=Hyper Text Transfer Protocol
+
+what is metadata = description of data (data ke baare me data)
+
+HTTP status code
+1xx - informational
+2xx - Success
+3xx - Redirection
+4xx - Client error
+5xx - server 
+
+100 - continue
+102 - processing
+
+200 - ok 
+201 - created
+202 - accepted
+
+307 - temperory redirect 
+308 - permanent redirect
+
+400 - bad request
+401 - unauthorized
+402 - payment required
+404 - notfound
+
+500 - internal server error
+504 - Gateway time out
