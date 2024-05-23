@@ -7,8 +7,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const generateAccessAndRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId);
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
+    const accessToken = await user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
 
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
@@ -106,13 +106,11 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  //send cookie
-
   //req body - take username/mail and password
   const { username, password, email } = req.body;
 
   //check all fields are filled or not
-  if (!username || !email) {
+  if (!username && !email) {
     throw new ApiError(400, "Username and Email address is required");
   }
 
@@ -132,7 +130,7 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid User Credential");
   }
   //access and referesh token
-  const { refreshToken, accessToken } = await generateAccessAndRefreshToken(
+  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
     user._id
   );
 
@@ -140,6 +138,7 @@ const loginUser = asyncHandler(async (req, res) => {
     "-password -refreshToken"
   );
 
+  //send cookie
   const options = {
     httpOnly: true,
     secure: true,
