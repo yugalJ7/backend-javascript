@@ -250,13 +250,13 @@ const changeCurrentPassssword = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, {}, "Password change Successfulyy"));
+    .json(new ApiResponse(200, {}, "Password change Successfully"));
 });
 
 const getCurrent = asyncHandler(async (req, res) => {
   return res
     .status(200)
-    .json(200, req.user, "Current user fetched successfullt");
+    .json(new ApiResponse(200, req.user, "Current user fetched successfully"));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
@@ -266,7 +266,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
   // If you set new: true, findByIdAndUpdate() will instead give you the object after update was applied.
-  const user = User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {
@@ -283,6 +283,8 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 });
 
 const updateUserAvatar = asyncHandler(async (req, res) => {
+  //delete old image later work todo
+
   const avatarLocalPath = req.file?.path;
 
   if (!avatarLocalPath) {
